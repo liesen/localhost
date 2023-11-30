@@ -1,0 +1,9 @@
+---
+- name: Install apt packages
+  ansible.builtin.apt:
+    pkg:
+    - libgmp-dev
+    - libz3-dev
+    - ripgrep
+    update_cache: true
+  become: true

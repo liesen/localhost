@@ -3,9 +3,6 @@
 - name: Setup workstation
   hosts: local
   roles:
-    # Fix these: curl, rust
-    # apt-packages I typically will want: libgmp-dev, libz3-dev,...
-    #  ... ripgrep for Telescope live_grep
     # - { role: devtools } # Git etc
     # set caps lock to escape: https://askubuntu.com/a/365701
     # - fonts
@@ -23,3 +20,4 @@
     # - include_tasks: tasks/obsidian.yml
     # - include_tasks: tasks/starship.yml
     - include_tasks: tasks/vscode.yml
+    - include_tasks: tasks/packages.yml
