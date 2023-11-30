@@ -1,0 +1,21 @@
+---
+- name: Install Visual Studio Code
+  community.general.snap:
+    name: code
+    classic: true
+  become: yes
+
+- name: Install Visual Studio Code Extensions
+  shell: code --install-extension {{ item }}
+  loop: 
+    - asvetliakov.vscode-neovim
+    - charliermarsh.ruff
+    - haskell.haskell
+    - ms-python.python
+
+# TODO: settings.json
+# {
+#   "editor.fontFamily": "'Iosevka Nerd Font'",
+#   "editor.fontLigatures": true,
+#   "keyboard.dispatch": "keyCode",
+# }

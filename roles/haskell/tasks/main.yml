@@ -1,0 +1,16 @@
+---
+- name: Download GHCup installer
+  ansible.builtin.get_url:
+    url: https://get-ghcup.haskell.org
+    dest: /tmp/get-ghcup.sh
+  register: ghcup_installer
+
+- name: Install GHCup
+  ansible.builtin.script:
+    cmd: "{{ ghcup_installer.dest }}"
+    creates: "{{ ansible_env.HOME }}/.ghcup"
+  environment:
+    BOOTSTRAP_HASKELL_NONINTERACTIVE: 1
+    BOOTSTRAP_HASKELL_ADJUST_BASHRC: 1
+    BOOTSTRAP_HASKELL_INSTALL_NO_STACK: 1
+    BOOTSTRAP_HASKELL_INSTALL_HLS: 1

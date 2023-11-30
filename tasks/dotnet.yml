@@ -1,0 +1,12 @@
+---
+- name: Download dotnet-install.sh
+  ansible.builtin.get_url:
+    url: https://dot.net/v1/dotnet-install.sh
+    dest: /tmp/dotnet-install.sh
+    mode: ugo+x
+
+- name: Install .NET
+  ansible.builtin.shell: /tmp/dotnet-install.sh --channel 7.0
+  register: dotnet_install
+  changed_when: "'already installed' not in dotnet_install.stdout"
+

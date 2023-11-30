@@ -1,0 +1,11 @@
+- name: Install Nerd Fonts
+  include_tasks: nerd-font.yml
+  loop: 
+    - Iosevka
+
+- name: Install Inter
+  include_tasks: inter.yml
+
+- name: Re-generate font cache files
+  ansible.builtin.shell: fc-cache -fv
+  become: true

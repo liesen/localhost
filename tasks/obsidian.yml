@@ -1,0 +1,6 @@
+---
+- name: Install Obsidian
+  community.general.snap:
+    name: obsidian
+    classic: true
+  become: yes

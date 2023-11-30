@@ -1,0 +1,23 @@
+---
+- name: Install python3-pip
+  ansible.builtin.apt:
+    pkg:
+      - python3-pip
+    state: latest
+    update_cache: yes
+  become: yes
+
+- name: Install python3-venv
+  ansible.builtin.apt:
+    pkg:
+      - python3-venv
+    state: latest
+    update_cache: yes
+  become: yes
+
+- name: Install python-is-python3
+  ansible.builtin.apt:
+    pkg:
+      - python-is-python3
+    state: latest
+  become: yes
