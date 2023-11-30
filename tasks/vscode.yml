@@ -3,7 +3,7 @@
   ansible.builtin.apt:
     deb: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
   become: true
-    
+
 - name: Install VSCode
   become: true
   block:
@@ -16,7 +16,7 @@
         suites: [stable]
         components: [main]
         state: present
-        enabled: yes
+        enabled: true
 
     - name: Install VSCode
       ansible.builtin.apt:
@@ -24,8 +24,8 @@
         update_cache: true
 
 - name: Install Visual Studio Code Extensions
-  shell: code --install-extension {{ item }}
-  loop: 
+  ansible.builtin.command: code --install-extension {{ item }}
+  loop:
     - asvetliakov.vscode-neovim
     - charliermarsh.ruff
     - haskell.haskell

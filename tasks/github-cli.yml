@@ -5,15 +5,15 @@
     url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
     dest: /usr/share/keyrings
   register: keyring
-  become: yes
+  become: true
 
 - name: Add GitHub's apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by={{ keyring.dest }}] https://cli.github.com/packages stable main"
+    repo: deb [signed-by={{ keyring.dest }}] https://cli.github.com/packages stable main
     filename: github-cli
-  become: yes
+  become: true
 
 - name: Install GitHub CLI
   ansible.builtin.apt:
     pkg: gh
-  become: yes
+  become: true

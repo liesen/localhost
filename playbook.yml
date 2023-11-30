@@ -3,21 +3,21 @@
 - name: Setup workstation
   hosts: local
   roles:
-    # - { role: devtools } # Git etc
-    # set caps lock to escape: https://askubuntu.com/a/365701
-    # - fonts
-    # - python
-    # - { role: rust }
-    # - haskell
-    # - alacritty
-    #     + Dropbox
-    #     + set up obsidian with Dropbox
+  # - { role: devtools } # Git etc
+  # set caps lock to escape: https://askubuntu.com/a/365701
+  # - fonts
+  # - python
+  # - { role: rust }
+  # - haskell
+  # - alacritty
+  #     + Dropbox
+  #     + set up obsidian with Dropbox
   tasks:
-    # - include_tasks: tasks/dotnet.yml
-    # - include_tasks: tasks/github-cli.yml
-    # - include_tasks: tasks/dropbox.yml
-    # - include_tasks: tasks/neovim.yml
-    # - include_tasks: tasks/obsidian.yml
-    # - include_tasks: tasks/starship.yml
-    - include_tasks: tasks/vscode.yml
-    - include_tasks: tasks/packages.yml
+    - ansible.builtin.include_tasks: tasks/dotnet.yml
+    - ansible.builtin.include_tasks: tasks/github-cli.yml
+    - ansible.builtin.include_tasks: tasks/dropbox.yml
+    - ansible.builtin.include_tasks: tasks/neovim.yml
+    - ansible.builtin.include_tasks: tasks/obsidian.yml
+    - ansible.builtin.include_tasks: tasks/starship.yml
+    - ansible.builtin.include_tasks: tasks/vscode.yml
+    - ansible.builtin.include_tasks: tasks/packages.yml

@@ -1,11 +1,11 @@
+---
 - name: Install Nerd Fonts
-  include_tasks: nerd-font.yml
-  loop: 
+  ansible.builtin.include_tasks: nerd-font.yml
+  loop:
     - Iosevka
 
 - name: Install Inter
-  include_tasks: inter.yml
-
+  ansible.builtin.include_tasks: inter.yml
 - name: Re-generate font cache files
-  ansible.builtin.shell: fc-cache -fv
+  ansible.builtin.command: fc-cache -fv
   become: true

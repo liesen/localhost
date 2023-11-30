@@ -1,3 +1,4 @@
+---
 - name: Create directory
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.local/share/fonts/Inter"
@@ -14,7 +15,7 @@
 
 - name: Get ETag for latest release
   ansible.builtin.uri:
-    url: "https://github.com/rsms/inter/releases/download/v4.0/Inter-4.0.zip"
+    url: https://github.com/rsms/inter/releases/download/v4.0/Inter-4.0.zip
     method: HEAD
   register: remote_head
 
@@ -22,13 +23,12 @@
   block:
     - name: Download Inter
       ansible.builtin.unarchive:
-        src: "https://github.com/rsms/inter/releases/download/v4.0/Inter-4.0.zip"
+        src: https://github.com/rsms/inter/releases/download/v4.0/Inter-4.0.zip
         dest: "{{ ansible_env.HOME }}/.local/share/fonts/Inter"
         remote_src: true
-      # notify ...
+    # notify ...
 
     - name: Update ETag cache file
       ansible.builtin.copy:
         dest: "{{ etag_file.dest }}"
         content: "{{ remote_head.etag }}"
-

@@ -3,5 +3,4 @@
   community.general.snap:
     name: alacritty
     classic: true
-  become: yes
-
+  become: true

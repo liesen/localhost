@@ -1,10 +1,9 @@
 ---
 - name: Install starship.rs
-  shell: curl -sS https://starship.rs/install.sh | sh -s -- --yes
-  become: yes
+  ansible.builtin.shell: curl -sS https://starship.rs/install.sh | sh -s -- --yes
+  become: true
 
 - name: Add to .bashrc
-  lineinfile:
+  ansible.builtin.lineinfile:
     line: eval "$(starship init bash)"
     path: ~/.bashrc
-

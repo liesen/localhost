@@ -1,3 +1,4 @@
+---
 - name: Create directory
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.local/share/fonts/{{ item }}"
@@ -14,7 +15,7 @@
 
 - name: Get ETag for latest release
   ansible.builtin.uri:
-    url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/{{ item }}.zip"
+    url: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/{{ item }}.zip
     method: HEAD
   register: remote_head
 
@@ -22,13 +23,12 @@
   block:
     - name: Download {{ item }}
       ansible.builtin.unarchive:
-        src: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/{{ item }}.zip"
+        src: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/{{ item }}.zip
         dest: "{{ ansible_env.HOME }}/.local/share/fonts/{{ item }}"
-        remote_src: yes
-      # notify ...
+        remote_src: true
+    # notify ...
 
     - name: Update ETag cache file
       ansible.builtin.copy:
         dest: "{{ etag_file.dest }}"
         content: "{{ remote_head.etag }}"
-
