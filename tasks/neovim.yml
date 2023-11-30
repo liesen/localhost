@@ -1,17 +1,4 @@
 ---
-- name: Install Neovim
-  community.general.flatpak:
-    name: io.neovim.nvim
-    method: user
-    state: absent
-
-- name: Add nvim alias
-  ansible.builtin.lineinfile:
-    line: alias nvim="flatpak run io.neovim.nvim"
-    path: ~/.bash_aliases
-    create: true
-    state: absent
-
 - name: Download Neovim AppImage
   ansible.builtin.get_url:
     url: https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
