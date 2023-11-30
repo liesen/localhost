@@ -8,18 +8,18 @@
     #  ... ripgrep for Telescope live_grep
     # - { role: devtools } # Git etc
     # set caps lock to escape: https://askubuntu.com/a/365701
-    - fonts
+    # - fonts
     # - python
     # - { role: rust }
-    - haskell
+    # - haskell
     # - alacritty
     #     + Dropbox
     #     + set up obsidian with Dropbox
   tasks:
-    - include_tasks: tasks/dotnet.yml
-    - include_tasks: "tasks/github-cli.yml"
-    # - include_tasks: "tasks/dropbox.yml"
-    - include_tasks: "tasks/neovim.yml"
-    # - include_tasks: "tasks/obsidian.yml"
-    - include_tasks: "tasks/starship.yml"
-    - include_tasks: "tasks/vscode.yml"
+    # - include_tasks: tasks/dotnet.yml
+    # - include_tasks: tasks/github-cli.yml
+    # - include_tasks: tasks/dropbox.yml
+    # - include_tasks: tasks/neovim.yml
+    # - include_tasks: tasks/obsidian.yml
+    # - include_tasks: tasks/starship.yml
+    - include_tasks: tasks/vscode.yml

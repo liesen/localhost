@@ -3,19 +3,32 @@
   community.general.flatpak:
     name: com.visualstudio.code
     method: user
+    state: absent
+
   # community.general.snap:
   #   name: code
   #   classic: true
   # become: yes
+#- name: Install Visual Studio Code
+#  community.general.flatpak:
+#    name: com.visualstudio.code
+#  become: true
 
 - name: Add code alias
   lineinfile:
     line: alias code="flatpak run com.visualstudio.code"
     path: ~/.bash_aliases
     create: true
+    state: absent
+
+- name: Install VSCode
+  ansible.builtin.apt:
+    deb: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
+  become: true
 
 - name: Install Visual Studio Code Extensions
-  shell: flatpak run com.visualstudio.code --install-extension {{ item }}
+  # shell: flatpak run com.visualstudio.code --install-extension {{ item }}
+  shell: code --install-extension {{ item }}
   loop: 
     - asvetliakov.vscode-neovim
     - charliermarsh.ruff
