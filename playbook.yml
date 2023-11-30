@@ -9,7 +9,6 @@
     # - { role: devtools } # Git etc
     # set caps lock to escape: https://askubuntu.com/a/365701
     - fonts
-    # - github-cli
     # - python
     # - { role: rust }
     - haskell
@@ -17,7 +16,8 @@
     #     + Dropbox
     #     + set up obsidian with Dropbox
   tasks:
-    - include_tasks: "tasks/dotnet.yml"
+    - include_tasks: tasks/dotnet.yml
+    - include_tasks: "tasks/github-cli.yml"
     # - include_tasks: "tasks/dropbox.yml"
     - include_tasks: "tasks/neovim.yml"
     # - include_tasks: "tasks/obsidian.yml"

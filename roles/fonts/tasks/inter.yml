@@ -14,7 +14,7 @@
 
 - name: Get ETag for latest release
   ansible.builtin.uri:
-    url: "https://github.com/rsms/inter/releases/download/v3.19/Inter-3.19.zip"
+    url: "https://github.com/rsms/inter/releases/download/v4.0/Inter-4.0.zip"
     method: HEAD
   register: remote_head
 
@@ -22,11 +22,9 @@
   block:
     - name: Download Inter
       ansible.builtin.unarchive:
-        src: "https://github.com/rsms/inter/releases/download/v3.19/Inter-3.19.zip"
+        src: "https://github.com/rsms/inter/releases/download/v4.0/Inter-4.0.zip"
         dest: "{{ ansible_env.HOME }}/.local/share/fonts/Inter"
-        remote_src: yes
-        include:
-          - "Inter Desktop/*"
+        remote_src: true
       # notify ...
 
     - name: Update ETag cache file
