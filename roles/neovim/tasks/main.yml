@@ -1,9 +1,0 @@
----
-- name: Install Neovim
-  community.general.snap:
-    name: nvim
-    channel: beta
-    classic: true
-  become: yes
-
-# TODO(liesen): snap nvim does not work with vscode-neovimm

@@ -2,24 +2,24 @@
 ---
 - name: Setup workstation
   hosts: local
-  roles: []
+  roles:
     # Fix these: curl, rust
     # apt-packages I typically will want: libgmp-dev, libz3-dev,...
     #  ... ripgrep for Telescope live_grep
     # - { role: devtools } # Git etc
     # set caps lock to escape: https://askubuntu.com/a/365701
-    # - fonts
-    # - starship
+    - fonts
     # - github-cli
     # - python
     # - { role: rust }
-    # - neovim  # Fix setting up plugins etc
-    # - haskell
+    - haskell
     # - alacritty
     #     + Dropbox
     #     + set up obsidian with Dropbox
   tasks:
     - include_tasks: "tasks/dotnet.yml"
     # - include_tasks: "tasks/dropbox.yml"
+    - include_tasks: "tasks/neovim.yml"
     # - include_tasks: "tasks/obsidian.yml"
-    # - include_tasks: "tasks/vscode.yml"
+    - include_tasks: "tasks/starship.yml"
+    - include_tasks: "tasks/vscode.yml"

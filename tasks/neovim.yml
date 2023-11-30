@@ -1,0 +1,11 @@
+---
+- name: Install Neovim
+  community.general.flatpak:
+    name: io.neovim.nvim
+    method: user
+
+- name: Add nvim alias
+  lineinfile:
+    line: alias nvim="flatpak run io.neovim.nvim"
+    path: ~/.bash_aliases
+    create: true

@@ -1,12 +1,21 @@
 ---
 - name: Install Visual Studio Code
-  community.general.snap:
-    name: code
-    classic: true
-  become: yes
+  community.general.flatpak:
+    name: com.visualstudio.code
+    method: user
+  # community.general.snap:
+  #   name: code
+  #   classic: true
+  # become: yes
+
+- name: Add code alias
+  lineinfile:
+    line: alias code="flatpak run com.visualstudio.code"
+    path: ~/.bash_aliases
+    create: true
 
 - name: Install Visual Studio Code Extensions
-  shell: code --install-extension {{ item }}
+  shell: flatpak run com.visualstudio.code --install-extension {{ item }}
   loop: 
     - asvetliakov.vscode-neovim
     - charliermarsh.ruff

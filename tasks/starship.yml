@@ -1,0 +1,10 @@
+---
+- name: Install starship.rs
+  shell: curl -sS https://starship.rs/install.sh | sh -s -- --yes
+  become: yes
+
+- name: Add to .bashrc
+  lineinfile:
+    line: eval "$(starship init bash)"
+    path: ~/.bashrc
+

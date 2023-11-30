@@ -1,7 +1,0 @@
----
-- name: Install starship.rs
-  community.general.snap:
-    name: starship
-    channel: edge
-  become: yes
-
