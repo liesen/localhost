@@ -1,0 +1,4 @@
+---
+mock_modules:
+  - community.general.flatpak
+  - community.general.snap
