@@ -6,6 +6,6 @@
     mode: ugo+x
 
 - name: Install .NET
-  ansible.builtin.command: /tmp/dotnet-install.sh --channel 7.0
+  ansible.builtin.command: /tmp/dotnet-install.sh --channel 8.0
   register: dotnet_install
   changed_when: "'already installed' not in dotnet_install.stdout"
