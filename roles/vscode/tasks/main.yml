@@ -1,10 +1,5 @@
 ---
 - name: Install VSCode
-  ansible.builtin.apt:
-    deb: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
-  become: true
-
-- name: Install VSCode
   become: true
   block:
     - name: Add VSCode APT repository
