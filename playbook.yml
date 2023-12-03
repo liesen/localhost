@@ -6,8 +6,8 @@
   # set caps lock to escape: https://askubuntu.com/a/365701
   #     + Dropbox
   #     + set up obsidian with Dropbox
+    - prelude
     - fonts
-    - packages
     - dotnet
     - python
     - github-cli

@@ -2,6 +2,7 @@
 - name: Install apt packages
   ansible.builtin.apt:
     pkg:
+      - entr
       - libgmp-dev
       - libz3-dev
       - ripgrep
