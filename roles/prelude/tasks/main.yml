@@ -5,6 +5,9 @@
       - entr
       - libgmp-dev
       - libz3-dev
-      - ripgrep
+      - ripgrep  # For Telescope
+      # For pyright
+      - nodejs
+      - npm
     update_cache: true
   become: true
