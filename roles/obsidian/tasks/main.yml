@@ -1,6 +1,5 @@
 ---
 - name: Install Obsidian
-  community.general.snap:
-    name: obsidian
-    classic: true
-  become: true
+  community.general.flatpak:
+    name: md.obsidian.Obsidian
+    method: user

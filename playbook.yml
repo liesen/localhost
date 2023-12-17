@@ -9,12 +9,12 @@
     - prelude
     - keyboard
     - fonts
+    - starship
     - dotnet
     - python
     - github-cli
     - haskell
-    # - dropbox
     - neovim
-    # - obsidian
-    - starship
+    - dropbox
+    - obsidian
     - vscode

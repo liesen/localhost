@@ -1,12 +1,6 @@
 ---
-- name: Download Dropbox installer
-  ansible.builtin.unarchive:
-    remote_src: true
-    src: https://www.dropbox.com/download?plat=lnx.x86_64
-    dest: "{{ ansible_env.HOME }}"
-    creates: "{{ ansible_env.HOME }}/.dropbox-dist"
-  register: download
+- name: Install Dropbox
+  community.general.flatpak:
+    name: com.dropbox.Client
+    method: user
 
-- name: Print return information from the previous task
-  ansible.builtin.debug:
-    var: download
