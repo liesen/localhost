@@ -1,9 +1,15 @@
 ---
+- name: Add Deadsnakes repository
+  apt_repository:
+    repo: ppa:deadsnakes
+  become: true
+
 - name: Install python
   ansible.builtin.apt:
     pkg:
-      - python3-pip
-      - python3-venv
+      - python3.12
+      # - python3.12-pip
+      - python3.12-venv
       - python-is-python3
     state: latest
     update_cache: true
