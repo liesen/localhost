@@ -5,9 +5,14 @@
     dest: /tmp/dotnet-install.sh
     mode: ugo+x
 
-- name: Install .NET
+- name: Install .NET 7
   ansible.builtin.command: /tmp/dotnet-install.sh --channel 7.0
   register: dotnet_install
+  changed_when: "'already installed' not in dotnet_install.stdout"
+
+- name: Install .NET 9
+  ansible.builtin.command: /tmp/dotnet-install.sh --channel 9.0.1xx --quality preview
+  register: dotnet_instalL
   changed_when: "'already installed' not in dotnet_install.stdout"
 
 - name: Set .NET environment variables
