@@ -1,0 +1,48 @@
+---
+- name: Add amdgpu repository
+  ansible.builtin.deb822_repository:
+    name: amdgpu
+    types: [deb]
+    uris: https://repo.radeon.com/amdgpu/6.4/ubuntu
+    signed_by: https://repo.radeon.com/rocm/rocm.gpg.key
+    suites: ["{{ ansible_distribution_release | lower }}"]
+    components: [main]
+    architectures: ["{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"]
+    state: present
+    enabled: yes
+  become: true
+
+- name: Add ROCm apt repository
+  ansible.builtin.deb822_repository:
+    name: rocm
+    types: [deb]
+    uris: https://repo.radeon.com/rocm/apt/6.4
+    signed_by: https://repo.radeon.com/rocm/rocm.gpg.key
+    suites: ["{{ ansible_distribution_release | lower }}"]
+    components: [main]
+    architectures: ["{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"]
+    state: present
+    enabled: yes
+  become: true
+
+- name: Register ROCm packages
+  ansible.builtin.copy:
+    dest: /etc/apt/preferences.d/rocm-pin-600
+    content: |
+      Package: *
+      Pin: release o=repo.radeon.com
+      Pin-Priority: 600
+  become: true
+
+- name: Install ROCm
+  ansible.builtin.apt:
+    pkg: rocm
+  become: true
+
+- name: Set ROCm environment variables
+  ansible.builtin.blockinfile:
+    path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: ROCm"
+    prepend_newline: true
+    block: |
+      export PATH="$PATH:/opt/rocm-6.4.0/bin"
