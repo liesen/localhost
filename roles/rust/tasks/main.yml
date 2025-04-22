@@ -1,0 +1,13 @@
+---
+- name: Download rustup-init
+  ansible.builtin.get_url:
+    url: https://sh.rustup.rs
+    dest: /tmp/rustup-init.sh
+  register: rustup_init
+
+- name: Install rustup
+  ansible.builtin.script:
+    cmd: "{{ rustup_init.dest }} -y"
+    creates: "{{ ansible_env.HOME }}/.cargo/bin/rustup"
+
+# TODO(liesen): Set PATH += ~/.cargo/bin
