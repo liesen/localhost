@@ -1,8 +1,8 @@
 ---
 - name: Download Neovim AppImage
   ansible.builtin.get_url:
-    url: https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
-    checksum: sha256:https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage.sha256sum
+    url: https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage
+    # checksum: sha256:https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage.sha256sum
     dest: /usr/local/bin/nvim
     mode: ugo+x
   become: true
