@@ -1,7 +1,7 @@
 init:
 	sudo apt install pipx -y
-	pipx install ansible-core
-	pipx ensurepath
+	pipx install ansible-core --force
+	pipx ensurepath --force
 	ansible-galaxy collection install community.general
 
 install:

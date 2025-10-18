@@ -1,16 +1,22 @@
 ---
-- name: Add Deadsnakes repository
-  apt_repository:
-    repo: ppa:deadsnakes
-  become: true
+# - name: Add Deadsnakes repository
+#   apt_repository:
+#     repo: ppa:deadsnakes
+#   become: true
 
-- name: Install python
-  ansible.builtin.apt:
-    pkg:
-      - python3.12
-      # - python3.12-pip
-      - python3.12-venv
-      - python-is-python3
-    state: latest
-    update_cache: true
-  become: true
+# - name: Install python
+#   ansible.builtin.apt:
+#     pkg:
+#       - python3.12
+#       # - python3.12-pip
+#       - python3.12-venv
+#       - python-is-python3
+#     state: latest
+#     update_cache: true
+#   become: true
+
+- name: Install uv
+  shell: pipx install uv
+
+- name: Install basedpyright
+  shell: uv tool install --upgrade basedpyright@latest

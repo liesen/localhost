@@ -17,6 +17,7 @@
     - name: Install VSCode
       ansible.builtin.apt:
         name: code
+        state: latest
         update_cache: true
 
 - name: Install Visual Studio Code Extensions

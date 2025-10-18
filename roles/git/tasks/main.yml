@@ -1,4 +1,17 @@
 ---
+- name: Install Git
+  become: true
+  block:
+    - name: Add Git APT repository
+      ansible.builtin.apt_repository:
+        repo: ppa:git-core/ppa
+        state: present
+
+    - name: Install Git
+      ansible.builtin.apt:
+        name: git
+        update_cache: true
+
 - name: Install delta  # https://github.com/dandavison/delta
   shell: |
     cargo install delta

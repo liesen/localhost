@@ -6,10 +6,17 @@
     dest: /tmp/dotnet-install.sh
     mode: ugo+x
 
-- name: Install .NET 9
-  ansible.builtin.command: /tmp/dotnet-install.sh --channel 9.0
+- name: Install .NET
+  ansible.builtin.command: 
+    argv:
+      - /tmp/dotnet-install.sh
+      - --channel
+      - "{{ item }}"
   register: dotnet_install
   changed_when: "'already installed' not in dotnet_install.stdout"
+  loop:
+    - 9.0
+    - 10.0
 
 - name: Set .NET environment variables
   ansible.builtin.blockinfile:
