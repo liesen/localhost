@@ -16,7 +16,6 @@
 #   become: true
 
 - name: Install uv
-  shell: pipx install uv
-
+  ansible.builtin.command: pipx install uv
 - name: Install basedpyright
-  shell: uv tool install --upgrade basedpyright@latest
+  ansible.builtin.command: uv tool install --upgrade basedpyright@latest

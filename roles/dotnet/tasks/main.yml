@@ -7,7 +7,7 @@
     mode: ugo+x
 
 - name: Install .NET
-  ansible.builtin.command: 
+  ansible.builtin.command:
     argv:
       - /tmp/dotnet-install.sh
       - --channel
@@ -26,4 +26,3 @@
     block: |
       export DOTNET_ROOT="{{ lookup('ansible.builtin.env', 'HOME') }}/.dotnet"
       export PATH="$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools"
-

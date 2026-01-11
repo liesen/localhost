@@ -7,4 +7,4 @@
     mode: ugo+x
   become: true
   vars:
-    nvim_version: nightly  # stable
+    nvim_version: nightly # stable

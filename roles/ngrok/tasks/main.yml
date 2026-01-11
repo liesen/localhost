@@ -8,7 +8,7 @@
     suites: [buster]
     components: [main]
     state: present
-    enabled: yes
+    enabled: true
   become: true
 
 - name: Install ngrok

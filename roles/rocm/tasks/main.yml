@@ -9,7 +9,7 @@
     components: [main]
     architectures: ["{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"]
     state: present
-    enabled: yes
+    enabled: true
   become: true
 
 - name: Add ROCm apt repository
@@ -22,7 +22,7 @@
     components: [main]
     architectures: ["{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"]
     state: present
-    enabled: yes
+    enabled: true
   become: true
 
 - name: Register ROCm packages

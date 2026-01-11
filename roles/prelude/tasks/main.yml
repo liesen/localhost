@@ -5,6 +5,6 @@
       - entr
       - libgmp-dev
       - libz3-dev
-      - ripgrep  # For Telescope
+      - ripgrep # For Telescope
     update_cache: true
   become: true

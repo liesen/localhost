@@ -9,7 +9,7 @@
     suites: ["{{ ansible_distribution_release | lower }}"]
     components: [main]
     state: present
-    enabled: yes
+    enabled: true
   become: true
 
 - name: Install latest stable Git
@@ -18,8 +18,8 @@
     update_cache: true
   become: true
 
-- name: Install delta  # https://github.com/dandavison/delta
-  shell: |
+- name: Install delta # https://github.com/dandavison/delta
+  ansible.builtin.shell: |
     cargo install delta
     git config --global core.pager delta
     git config --global interactive.diffFilter 'delta --color-only'

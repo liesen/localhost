@@ -3,4 +3,3 @@
   community.general.flatpak:
     name: com.dropbox.Client
     method: user
-
