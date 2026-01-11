@@ -1,19 +1,18 @@
 ---
-- name: Download keyring
-  ansible.builtin.get_url:
-    # id: 23F3D4EA75716059
-    url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
-    dest: /usr/share/keyrings
-  register: keyring
-  become: true
-
-- name: Add GitHub's apt repository
-  ansible.builtin.apt_repository:
-    repo: deb [signed-by={{ keyring.dest }}] https://cli.github.com/packages stable main
-    filename: github-cli
+- name: Add GitHub CLI apt repository
+  ansible.builtin.deb822_repository:
+    name: github-cli
+    types: [deb]
+    uris: https://cli.github.com/packages
+    signed_by: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+    suites: [stable]
+    components: [main]
+    state: present
+    enabled: yes
   become: true
 
 - name: Install GitHub CLI
   ansible.builtin.apt:
-    pkg: gh
+    name: gh
+    update_cache: true
   become: true
