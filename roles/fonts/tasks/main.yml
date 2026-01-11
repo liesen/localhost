@@ -6,6 +6,7 @@
 
 - name: Install Inter
   ansible.builtin.include_tasks: inter.yml
+
 - name: Re-generate font cache files
   ansible.builtin.command: fc-cache -fv
   become: true
