@@ -25,5 +25,3 @@
     git config --global interactive.diffFilter 'delta --color-only'
     git config --global delta.navigate true
     # git config --global merge.conflictStyle zdiff3
-  register: git_delta_install
-  changed_when: '"Installed package `git-delta" in git_delta_install.stdout'
