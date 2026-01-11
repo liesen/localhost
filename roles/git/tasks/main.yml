@@ -18,10 +18,12 @@
     update_cache: true
   become: true
 
-- name: Install delta # https://github.com/dandavison/delta
+- name: Install git-delta # https://github.com/dandavison/delta
   ansible.builtin.shell: |
-    cargo install delta
+    cargo install git-delta
     git config --global core.pager delta
     git config --global interactive.diffFilter 'delta --color-only'
     git config --global delta.navigate true
     # git config --global merge.conflictStyle zdiff3
+  register: git_delta_install
+  changed_when: '"Installed package `git-delta" in git_delta_install.stdout'
