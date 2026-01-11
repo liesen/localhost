@@ -1,0 +1,18 @@
+---
+- name: Add ngrok apt repository
+  ansible.builtin.deb822_repository:
+    name: ngrok
+    types: [deb]
+    uris: https://ngrok-agent.s3.amazonaws.com
+    signed_by: https://ngrok-agent.s3.amazonaws.com/ngrok.asc
+    suites: [buster]
+    components: [main]
+    state: present
+    enabled: yes
+  become: true
+
+- name: Install ngrok
+  ansible.builtin.apt:
+    name: ngrok
+    update_cache: true
+  become: true

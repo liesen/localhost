@@ -18,9 +18,11 @@
     - github-cli
     - haskell
     - neovim
+    - ngrok
     - dropbox
     - obsidian
     - vscode
     - nodejs
     - docker
-    - rocm
+    #- rocm
+    #- android
