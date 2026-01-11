@@ -15,7 +15,7 @@
     - starship
     - dotnet
     - python
-    - github-cli
+    - github_cli
     - haskell
     - neovim
     - ngrok
@@ -24,5 +24,5 @@
     - vscode
     - nodejs
     - docker
-    #- rocm
-    #- android
+    # - rocm
+    # - android
