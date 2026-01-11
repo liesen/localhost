@@ -1,7 +1,6 @@
 ---
 mock_modules:
   - community.general.flatpak
-  - community.general.snap
 
 skip_list:
   - package-latest # I want to upgrade packages to latest versions
