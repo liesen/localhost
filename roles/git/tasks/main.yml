@@ -1,16 +1,22 @@
 ---
-- name: Install Git
+# https://launchpad.net/~git-core/+archive/ubuntu/ppa
+- name: Add Git apt repository
+  ansible.builtin.deb822_repository:
+    name: git-core
+    types: [deb]
+    uris: https://ppa.launchpadcontent.net/git-core/ppa/ubuntu
+    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF911AB184317630C59970973E363C90F8F1B6217
+    suites: ["{{ ansible_distribution_release | lower }}"]
+    components: [main]
+    state: present
+    enabled: yes
   become: true
-  block:
-    - name: Add Git APT repository
-      ansible.builtin.apt_repository:
-        repo: ppa:git-core/ppa
-        state: present
 
-    - name: Install Git
-      ansible.builtin.apt:
-        name: git
-        update_cache: true
+- name: Install latest stable Git
+  ansible.builtin.apt:
+    name: git
+    update_cache: true
+  become: true
 
 - name: Install delta  # https://github.com/dandavison/delta
   shell: |
