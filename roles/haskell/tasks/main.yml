@@ -14,3 +14,17 @@
     BOOTSTRAP_HASKELL_ADJUST_BASHRC: "1"
     BOOTSTRAP_HASKELL_INSTALL_NO_STACK: "1"
     BOOTSTRAP_HASKELL_INSTALL_HLS: "1"
+
+- name: Install latest Haskell tools via GHCup
+  ansible.builtin.command:
+    argv:
+      - ghcup
+      - install
+      - "{{ item }}"
+      - latest
+  register: ghcup_install
+  changed_when: "'installation successful' in ghcup_install.stdout"
+  loop:
+    - cabal
+    - ghc
+    - hls

@@ -27,6 +27,8 @@
     - charliermarsh.ruff
     - haskell.haskell
     - ms-python.python
+  register: vscode_extension_result
+  changed_when: "'was successfully installed.' in vscode_extension_result.stdout"
 
 # TODO: settings.json
 # {
