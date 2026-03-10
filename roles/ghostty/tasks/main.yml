@@ -1,0 +1,23 @@
+---
+- name: Add Ghostty apt repository
+  ansible.builtin.deb822_repository:
+    name: ghostty
+    types: [deb]
+    uris: http://download.opensuse.org/repositories/home:/clayrisser:/sid/Debian_Unstable/
+    signed_by: https://download.opensuse.org/repositories/home:clayrisser:sid/Debian_Unstable/Release.key
+    architectures: ["{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"]
+    suites: "/"
+    state: present
+    enabled: true
+  become: true
+
+- name: Install Ghostty
+  ansible.builtin.apt:
+    name: ghostty
+    state: latest
+    update_cache: true
+  become: true
+
+- name: Register Ghostty as default terminal
+  ansible.builtin.command: update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/bin/ghostty 50
+  become: true
