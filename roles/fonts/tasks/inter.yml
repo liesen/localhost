@@ -3,32 +3,17 @@
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.local/share/fonts/Inter"
     state: directory
-  register: font_directory
 
-# Only download (large) font archives if the ETag has changed
-- name: Create ETag cache file
-  ansible.builtin.copy:
-    dest: "{{ font_directory.path }}/.etag"
-    content: ""
-    force: false
-  register: etag_file
+- name: Download Inter archive
+  ansible.builtin.get_url:
+    url: "https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip"
+    dest: "/tmp/Inter-4.1.zip"
+    mode: '0644'
+  register: font_download
 
-- name: Get ETag for latest release
-  ansible.builtin.uri:
-    url: https://github.com/rsms/inter/releases/download/v4.0/Inter-4.0.zip
-    method: HEAD
-  register: remote_head
-
-- when: remote_head.etag != lookup('file', etag_file.dest)
-  block:
-    - name: Download Inter
-      ansible.builtin.unarchive:
-        src: https://github.com/rsms/inter/releases/download/v4.0/Inter-4.0.zip
-        dest: "{{ ansible_env.HOME }}/.local/share/fonts/Inter"
-        remote_src: true
-    # notify ...
-
-    - name: Update ETag cache file
-      ansible.builtin.copy:
-        dest: "{{ etag_file.dest }}"
-        content: "{{ remote_head.etag }}"
+- name: Extract Inter
+  ansible.builtin.unarchive:
+    src: "/tmp/Inter-4.1.zip"
+    dest: "{{ ansible_env.HOME }}/.local/share/fonts/Inter"
+    remote_src: false
+  when: font_download.changed
