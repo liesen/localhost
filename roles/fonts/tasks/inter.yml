@@ -4,16 +4,22 @@
     path: "{{ ansible_env.HOME }}/.local/share/fonts/Inter"
     state: directory
 
+- name: Get latest Inter release info
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/rsms/inter/releases/latest
+    return_content: true
+  register: inter_latest_release
+
 - name: Download Inter archive
   ansible.builtin.get_url:
-    url: "https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip"
-    dest: "/tmp/Inter-4.1.zip"
+    url: "{{ (inter_latest_release.content | from_json).assets[0].browser_download_url }}"
+    dest: "/tmp/Inter-latest.zip"
     mode: '0644'
   register: font_download
 
 - name: Extract Inter
   ansible.builtin.unarchive:
-    src: "/tmp/Inter-4.1.zip"
+    src: "/tmp/Inter-latest.zip"
     dest: "{{ ansible_env.HOME }}/.local/share/fonts/Inter"
     remote_src: false
   when: font_download.changed
