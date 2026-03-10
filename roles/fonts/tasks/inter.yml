@@ -17,10 +17,12 @@
     mode: '0644'
   register: font_download
 
-- name: Extract Inter
+- name: Extract Inter TTF fonts only
   ansible.builtin.unarchive:
     src: "/tmp/Inter-latest.zip"
     dest: "{{ ansible_env.HOME }}/.local/share/fonts/Inter"
     remote_src: false
+    include:
+      - "Inter.ttc"
   when: font_download.changed
   notify: Update font cache
