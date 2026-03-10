@@ -12,7 +12,7 @@
 
 - name: Download Inter archive
   ansible.builtin.get_url:
-    url: "{{ (inter_latest_release.content | from_json).assets[0].browser_download_url }}"
+    url: "{{ (inter_latest_release.content | from_json).assets | selectattr('name', 'search', '^Inter-.*\\.zip$') | map(attribute='browser_download_url') | first }}"
     dest: "/tmp/Inter-latest.zip"
     mode: '0644'
   register: font_download
