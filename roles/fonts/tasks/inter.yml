@@ -23,3 +23,4 @@
     dest: "{{ ansible_env.HOME }}/.local/share/fonts/Inter"
     remote_src: false
   when: font_download.changed
+  notify: Update font cache
