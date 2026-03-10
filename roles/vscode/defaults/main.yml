@@ -1,0 +1,6 @@
+---
+vscode_extensions:
+  - asvetliakov.vscode-neovim
+  - charliermarsh.ruff
+  - haskell.haskell
+  - ms-python.python

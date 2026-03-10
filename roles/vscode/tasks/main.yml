@@ -21,12 +21,8 @@
         update_cache: true
 
 - name: Install Visual Studio Code Extensions
-  ansible.builtin.command: code --install-extension {{ item }}
-  loop:
-    - asvetliakov.vscode-neovim
-    - charliermarsh.ruff
-    - haskell.haskell
-    - ms-python.python
+  ansible.builtin.command: "code --install-extension {{ item }}"
+  loop: "{{ vscode_extensions }}"
   register: vscode_extension_result
   changed_when: "'was successfully installed.' in vscode_extension_result.stdout"
 
