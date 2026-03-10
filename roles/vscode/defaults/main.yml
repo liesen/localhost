@@ -4,3 +4,11 @@ vscode_extensions:
   - charliermarsh.ruff
   - haskell.haskell
   - ms-python.python
+  - ms-dotnettools.csdevkit
+  - rust-lang.rust-analyzer
+  - astral-sh.ty
+  - asciidoctor.asciidoctor-vscode
+  - flobilosaurus.vscode-asciidoc-slides
+  - vstirbu.vscode-mermaid-preview
+  - ms-vscode-remote.remote-containers
+  - docker.docker
