@@ -5,31 +5,16 @@
     state: directory
   register: fonts_directory
 
-# Only download (large) font archives if the ETag has changed
-- name: Create ETag cache file
-  ansible.builtin.copy:
-    dest: "{{ fonts_directory.path }}/.etag"
-    content: ""
-    force: false
-  register: etag_file
+- name: Download {{ item }} archive
+  ansible.builtin.get_url:
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/{{ item }}.tar.xz"
+    dest: "/tmp/{{ item }}.tar.xz"
+    mode: '0644'
+  register: font_download
 
-- name: Get ETag for latest release
-  ansible.builtin.uri:
-    url: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/{{ item }}.zip
-    method: HEAD
-  register: remote_head
-
-- name: Conditional font download
-  when: remote_head.etag != lookup('file', etag_file.dest)
-  block:
-    - name: Download {{ item }}
-      ansible.builtin.unarchive:
-        src: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/{{ item }}.zip
-        dest: "{{ ansible_env.HOME }}/.local/share/fonts/{{ item }}"
-        remote_src: true
-    # notify ...
-
-    - name: Update ETag cache file
-      ansible.builtin.copy:
-        dest: "{{ etag_file.dest }}"
-        content: "{{ remote_head.etag }}"
+- name: Extract {{ item }}
+  ansible.builtin.unarchive:
+    src: "/tmp/{{ item }}.tar.xz.xz"
+    dest: "{{ ansible_env.HOME }}/.local/share/fonts/{{ item }}"
+    remote_src: false
+  when: font_download.changed
