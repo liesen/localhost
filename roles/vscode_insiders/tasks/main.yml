@@ -1,0 +1,18 @@
+---
+- name: Check if VSCode Insiders is installed
+  ansible.builtin.command: dpkg-query -W code-insiders
+  register: code_insiders_check
+  failed_when: false
+  changed_when: false
+
+- name: Download VSCode Insiders
+  ansible.builtin.get_url:
+    url: "https://code.visualstudio.com/sha/download?build=insider&os=linux-deb-x64"
+    dest: "/tmp/vscode-insiders.deb"
+    mode: '0644'
+  register: vscode_insiders_download
+
+- name: Install VSCode Insiders using standard tools
+  become: true
+  ansible.builtin.command: apt-get install -y /tmp/vscode-insiders.deb
+  when: vscode_insiders_download.changed or code_insiders_check.rc != 0

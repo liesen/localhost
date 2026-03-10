@@ -22,6 +22,8 @@
     - dropbox
     - obsidian
     - vscode
+    - vscode_insiders
+    - antigravity
     - nodejs
     - docker
     # - rocm
