@@ -1,3 +1,4 @@
 ---
 - name: Swap caps lock and escape
   ansible.builtin.shell: dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape']"
+  changed_when: false

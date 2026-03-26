@@ -25,3 +25,4 @@
     git config --global interactive.diffFilter 'delta --color-only'
     git config --global delta.navigate true
     # git config --global merge.conflictStyle zdiff3
+  creates: "{{ ansible_env.HOME }}/.cargo/bin/delta"
