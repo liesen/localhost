@@ -14,8 +14,8 @@
 
 - name: Extract {{ item }}
   ansible.builtin.unarchive:
-    src: "/tmp/{{ item }}.tar.xz.xz"
+    src: "/tmp/{{ item }}.tar.xz"
     dest: "{{ ansible_env.HOME }}/.local/share/fonts/{{ item }}"
-    remote_src: false
+    remote_src: true
   when: font_download.changed
   notify: Update font cache
