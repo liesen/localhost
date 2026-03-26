@@ -15,8 +15,8 @@
 #     update_cache: true
 #   become: true
 
-- name: Install uv
-  ansible.builtin.command: pipx install uv --upgrade
+- name: Install or upgrade uv
+  ansible.builtin.command: pipx install --force-reinstall uv
 
 - name: Install basedpyright
   ansible.builtin.command: uv tool install --upgrade basedpyright@latest
