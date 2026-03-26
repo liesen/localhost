@@ -6,5 +6,12 @@
       - libgmp-dev
       - libz3-dev
       - ripgrep # For Telescope
+      - flatpak
     update_cache: true
   become: true
+
+- name: Add Flathub remote
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
