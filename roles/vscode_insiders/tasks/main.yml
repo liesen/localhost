@@ -16,7 +16,6 @@
   become: true
   ansible.builtin.command: apt-get install -y /tmp/vscode-insiders.deb
   when: vscode_insiders_download.changed or code_insiders_check.rc != 0
-  changed_when: false
 
 - name: Install VSCode Insiders Extensions
   ansible.builtin.command: "code-insiders --install-extension {{ item }}"
