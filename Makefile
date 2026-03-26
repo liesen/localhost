@@ -8,5 +8,5 @@ lint:
 	ansible-lint
 
 install:
-	ansible-playbook -K playbook.yml -i hosts
+	ansible-playbook -K playbook.yml -i hosts $(if $(ROLES),--tags $(ROLES))
 

@@ -1,4 +1,5 @@
 # ansible-playbook -K playbook.yml -i hosts
+# Usage: ansible-playbook -K playbook.yml -i hosts --tags rust,neovim
 ---
 - name: Setup workstation
   hosts: local
@@ -6,25 +7,25 @@
   # set caps lock to escape: https://askubuntu.com/a/365701
   #     + Dropbox
   #     + set up obsidian with Dropbox
-    - prelude
-    - ghostty
-    - rust
-    - git
-    - keyboard
-    - fonts
-    - starship
-    - dotnet
-    - python
-    - github_cli
-    - haskell
-    - neovim
-    - ngrok
-    - dropbox
-    - obsidian
-    - vscode
-    - vscode_insiders
-    - antigravity
-    - nodejs
-    - docker
-    # - rocm
-    # - android
+    - { role: prelude, tags: [prelude] }
+    - { role: ghostty, tags: [ghostty] }
+    - { role: rust, tags: [rust] }
+    - { role: git, tags: [git] }
+    - { role: keyboard, tags: [keyboard] }
+    - { role: fonts, tags: [fonts] }
+    - { role: starship, tags: [starship] }
+    - { role: dotnet, tags: [dotnet] }
+    - { role: python, tags: [python] }
+    - { role: github_cli, tags: [github_cli] }
+    - { role: haskell, tags: [haskell] }
+    - { role: neovim, tags: [neovim] }
+    - { role: ngrok, tags: [ngrok] }
+    - { role: dropbox, tags: [dropbox] }
+    - { role: obsidian, tags: [obsidian] }
+    - { role: vscode, tags: [vscode] }
+    - { role: vscode_insiders, tags: [vscode_insiders] }
+    - { role: antigravity, tags: [antigravity] }
+    - { role: nodejs, tags: [nodejs] }
+    - { role: docker, tags: [docker] }
+    # - { role: rocm, tags: [rocm] }
+    # - { role: android, tags: [android] }
