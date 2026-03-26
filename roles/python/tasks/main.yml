@@ -16,7 +16,7 @@
 #   become: true
 
 - name: Install or upgrade uv
-  ansible.builtin.command: pipx install --force-reinstall uv
+  ansible.builtin.command: pipx install --force uv
 
 - name: Install basedpyright
   ansible.builtin.command: uv tool install --upgrade basedpyright@latest
