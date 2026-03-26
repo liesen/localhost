@@ -1,0 +1,28 @@
+---
+- name: Install adb
+  ansible.builtin.apt:
+    pkg: adb
+  become: true
+
+- name: Create $ANDROID_HOME/cmdline-tools
+  ansible.builtin.file:
+    path: "{{ android_home }}/cmdline-tools"
+    state: directory
+  become: true
+
+- name: Extract cmdline-tools
+  ansible.builtin.unarchive:
+    src: https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip
+    # checksum: sha256:7ec965280a073311c339e571cd5de778b9975026cfcbe79f2b1cdcb1e15317ee
+    dest: "{{ android_home }}"
+    remote_src: true
+  become: true
+
+- name: Set Android SDK environment variables
+  ansible.builtin.blockinfile:
+    path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: android"
+    prepend_newline: true
+    block: |
+      export ANDROID_HOME={{ android_home }}
+      export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/bin

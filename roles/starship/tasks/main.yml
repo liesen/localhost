@@ -2,7 +2,7 @@
 - name: Install starship.rs
   ansible.builtin.shell: curl -sS https://starship.rs/install.sh | sh -s -- --yes
   become: true
-  creates: /usr/local/bin/starship
+  changed_when: false
 
 - name: Add to .bashrc
   ansible.builtin.lineinfile:
