@@ -17,3 +17,17 @@
     name: nodejs
     update_cache: true
   become: true
+
+# npm global packages should be installed to ~/.npm-packages to avoid needing sudo
+- name: Set npm prefix to ~/.npm-packages
+  ansible.builtin.command:
+    cmd: npm config set prefix "{{ lookup('ansible.builtin.env', 'HOME') }}/.npm-packages"
+  changed_when: false
+
+- name: Add ~/.npm-packages/bin to PATH
+  ansible.builtin.blockinfile:
+    path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: npm"
+    prepend_newline: true
+    block: |
+      export PATH="{{ lookup('ansible.builtin.env', 'HOME') }}/.npm-packages/bin:$PATH"
