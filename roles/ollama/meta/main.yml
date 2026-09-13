@@ -1,0 +1,4 @@
+---
+dependencies:
+  - role: rocm
+    tags: [ollama, rocm]

@@ -1,0 +1,2 @@
+# The Radeon 780M is an iGPU; Ollama >= 0.13 drops integrated GPUs unless this is set
+ollama_igpu_enable: "1"

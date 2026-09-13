@@ -28,4 +28,5 @@
     - { role: nodejs, tags: [nodejs] }
     - { role: docker, tags: [docker] }
     - { role: rocm, tags: [rocm] }
+    - { role: ollama, tags: [ollama] }
     # - { role: android, tags: [android] }

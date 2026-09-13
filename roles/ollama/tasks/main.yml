@@ -1,0 +1,94 @@
+# Installs the latest Ollama release per https://docs.ollama.com/linux
+# One GitHub API call resolves the tag and tarball digest each run; the
+# version guard skips the 1.4 GB download whenever installed == latest
+---
+- name: Install archive dependencies
+  ansible.builtin.apt:
+    pkg:
+      - zstd
+  become: true
+
+- name: Create ollama user
+  ansible.builtin.user:
+    name: ollama
+    system: true
+    create_home: true
+    home: /usr/share/ollama
+    shell: /bin/false
+  become: true
+
+- name: Add current user to ollama group
+  ansible.builtin.user:
+    name: "{{ lookup('ansible.builtin.env', 'USER') }}"
+    groups: ollama
+    append: true
+  become: true
+
+- name: Query latest Ollama release
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/ollama/ollama/releases/latest
+    return_content: true
+  register: ollama_release
+  changed_when: false
+
+- name: Check installed Ollama version
+  ansible.builtin.command: /usr/bin/ollama --version
+  register: ollama_installed
+  failed_when: false
+  changed_when: false
+
+- name: Determine if update is needed
+  ansible.builtin.set_fact:
+    ollama_update: "{{ (ollama_release.json.tag_name | default('') | lstrip('v')) not in (ollama_installed.stdout | default('')) }}"
+
+- name: Download Ollama {{ ollama_release.json.tag_name }}
+  ansible.builtin.get_url:
+    url: https://github.com/ollama/ollama/releases/download/{{ ollama_release.json.tag_name }}/ollama-linux-amd64.tar.zst
+    dest: /tmp/ollama-linux-amd64-{{ ollama_release.json.tag_name }}.tar.zst
+    checksum: "{{ ollama_release.json.assets | selectattr('name', 'equalto', 'ollama-linux-amd64.tar.zst') | map(attribute='digest') | first }}"
+    mode: "0644"
+  when: ollama_update
+  notify: Restart ollama
+
+- name: Remove old install-script binary and libraries
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /usr/local/bin/ollama
+    - /usr/local/lib/ollama
+  become: true
+  notify: Restart ollama
+
+- name: Remove previous Ollama libraries
+  ansible.builtin.file:
+    path: /usr/lib/ollama
+    state: absent
+  become: true
+  when: ollama_update
+  notify: Restart ollama
+
+- name: Install Ollama {{ ollama_release.json.tag_name }}
+  ansible.builtin.unarchive:
+    src: /tmp/ollama-linux-amd64-{{ ollama_release.json.tag_name }}.tar.zst
+    dest: /usr
+    remote_src: true
+  become: true
+  when: ollama_update
+  notify: Restart ollama
+
+- name: Install systemd unit
+  ansible.builtin.template:
+    src: ollama.service.j2
+    dest: /etc/systemd/system/ollama.service
+    mode: "0644"
+  become: true
+  notify: Restart ollama
+
+- name: Enable ollama service
+  ansible.builtin.systemd:
+    name: ollama
+    enabled: true
+    state: started
+    daemon_reload: true
+  become: true
