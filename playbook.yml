@@ -27,5 +27,5 @@
     - { role: antigravity, tags: [antigravity] }
     - { role: nodejs, tags: [nodejs] }
     - { role: docker, tags: [docker] }
-    # - { role: rocm, tags: [rocm] }
+    - { role: rocm, tags: [rocm] }
     # - { role: android, tags: [android] }

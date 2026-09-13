@@ -1,42 +1,31 @@
+# Installs ROCm from AMD's stable apt repository per https://rocm.docs.amd.com/en/latest/install/rocm.html
+# Kernel driver: in-tree amdgpu from the Pop!_OS kernel (inbox driver per Ryzen APU prerequisites)
 ---
-- name: Add amdgpu repository
+- name: Add ROCm stable repository
   ansible.builtin.deb822_repository:
-    name: amdgpu
+    name: amdrocm-stable
     types: [deb]
-    uris: https://repo.radeon.com/amdgpu/6.4/ubuntu
-    signed_by: https://repo.radeon.com/rocm/rocm.gpg.key
-    suites: ["{{ ansible_distribution_release | lower }}"]
+    uris: https://stable.repo.amd.com/rocm/core/packages/ubuntu2404/
+    signed_by: https://stable.repo.amd.com/rocm/gpg/packages.gpg
+    suites: [stable]
     components: [main]
-    architectures: ["{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"]
+    architectures: [amd64]
     state: present
     enabled: true
-  become: true
-
-- name: Add ROCm apt repository
-  ansible.builtin.deb822_repository:
-    name: rocm
-    types: [deb]
-    uris: https://repo.radeon.com/rocm/apt/6.4
-    signed_by: https://repo.radeon.com/rocm/rocm.gpg.key
-    suites: ["{{ ansible_distribution_release | lower }}"]
-    components: [main]
-    architectures: ["{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"]
-    state: present
-    enabled: true
-  become: true
-
-- name: Register ROCm packages
-  ansible.builtin.copy:
-    dest: /etc/apt/preferences.d/rocm-pin-600
-    content: |
-      Package: *
-      Pin: release o=repo.radeon.com
-      Pin-Priority: 600
   become: true
 
 - name: Install ROCm
   ansible.builtin.apt:
-    pkg: rocm
+    pkg: amdrocm10.0-gfx1103
+    state: latest
+    update_cache: true
+  become: true
+
+- name: Add current user to GPU access groups
+  ansible.builtin.user:
+    name: "{{ lookup('ansible.builtin.env', 'USER') }}"
+    groups: [render, video]
+    append: true
   become: true
 
 - name: Set ROCm environment variables
@@ -45,4 +34,4 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK: ROCm"
     prepend_newline: true
     block: |
-      export PATH="$PATH:/opt/rocm-6.4.0/bin"
+      export PATH="$PATH:/opt/rocm/bin"
