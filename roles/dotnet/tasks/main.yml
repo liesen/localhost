@@ -1,28 +1,44 @@
 ---
-# Uninstall is simply rm -rf ~/.dotnet
-- name: Download dotnet-install.sh
-  ansible.builtin.get_url:
-    url: https://dot.net/v1/dotnet-install.sh
-    dest: /tmp/dotnet-install.sh
-    mode: ugo+x
+# Uninstall: dotnetup env clear, then rm ~/.local/bin/dotnetup and
+# rm -rf ~/.local/share/dotnetup (legacy pre-dotnetup installs lived in ~/.dotnet)
 
-- name: Install .NET
+- name: Download get-dotnetup.sh
+  ansible.builtin.get_url:
+    url: https://aka.ms/dotnetup/get-dotnetup.sh
+    dest: /tmp/get-dotnetup.sh
+
+- name: Install dotnetup
+  ansible.builtin.command:
+    argv: [bash, /tmp/get-dotnetup.sh, --install-dir, "{{ ansible_env.HOME }}/.local/bin"]
+    creates: "{{ ansible_env.HOME }}/.local/bin/dotnetup"
+  register: dotnetup_install
+
+- name: Update dotnetup
+  ansible.builtin.command:
+    argv: ["{{ ansible_env.HOME }}/.local/bin/dotnetup", self, update]
+  when: not dotnetup_install.changed
+
+- name: Configure shell environment
   ansible.builtin.command:
     argv:
-      - /tmp/dotnet-install.sh
-      - --channel
-      - "{{ item }}"
-  register: dotnet_install
-  changed_when: "'already installed' not in dotnet_install.stdout"
-  loop:
-    - 9.0
-    - 10.0
+      - dotnetup
+      - env
+      - set
+      - shell
+      - --shell
+      - bash
+      - --dotnetup-on-path=false
 
-- name: Set .NET environment variables
-  ansible.builtin.blockinfile:
-    path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.bashrc"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK: dotnet"
-    prepend_newline: true
-    block: |
-      export DOTNET_ROOT="{{ lookup('ansible.builtin.env', 'HOME') }}/.dotnet"
-      export PATH="$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools"
+- name: Track .NET SDK channels
+  ansible.builtin.command:
+    argv:
+      - dotnetup
+      - sdk
+      - install
+      - "{{ item }}"
+      - --interactive=false
+      - --no-progress
+  loop:
+    - 10.0
+  register: dotnet_install
+  changed_when: "'Installed' in dotnet_install.stdout"
