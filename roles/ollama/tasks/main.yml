@@ -37,9 +37,15 @@
   failed_when: false
   changed_when: false
 
+- name: Resolve Ollama versions
+  ansible.builtin.set_fact:
+    ollama_installed_version: "{{ ollama_installed.stdout | regex_replace('^ollama version is ') }}"
+    ollama_latest_version: "{{ ollama_release.json.tag_name | regex_replace('^v') }}"
+
 - name: Determine if update is needed
   ansible.builtin.set_fact:
-    ollama_update: "{{ (ollama_release.json.tag_name | default('') | lstrip('v')) not in (ollama_installed.stdout | default('')) }}"
+    ollama_update: "{{ ollama_installed.rc != 0
+      or ollama_installed_version is version(ollama_latest_version, '<') }}"
 
 - name: Download Ollama {{ ollama_release.json.tag_name }}
   ansible.builtin.get_url:
