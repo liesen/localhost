@@ -1,12 +1,13 @@
 ---
+# https://launchpad.net/~mkasberg/+archive/ubuntu/ghostty-ubuntu
 - name: Add Ghostty apt repository
   ansible.builtin.deb822_repository:
     name: ghostty
     types: [deb]
-    uris: http://download.opensuse.org/repositories/home:/clayrisser:/sid/Debian_Unstable/
-    signed_by: https://download.opensuse.org/repositories/home:clayrisser:sid/Debian_Unstable/Release.key
-    architectures: ["{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"]
-    suites: "/"
+    uris: https://ppa.launchpadcontent.net/mkasberg/ghostty-ubuntu/ubuntu
+    signed_by: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x0721FDF5FECB88DC6920361657C8EF455CEAE491
+    suites: ["{{ ansible_distribution_release | lower }}"]
+    components: [main]
     state: present
     enabled: true
   become: true
